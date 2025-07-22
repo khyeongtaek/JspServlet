@@ -1,29 +1,24 @@
-<%@ page import="java.util.List" %>
-<%@ page import="model.dto.BoardDTO" %>
-<%@ page import="java.util.ArrayList" %>
-<%@ page import="dao.BoardDAO" %><%--
-  Created by IntelliJ IDEA.
-  User: kht
-  Date: 2025. 7. 22.
-  Time: 오후 4:14
-  To change this template use File | Settings | File Templates.
---%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@page import="dao.BoardDAO" %>
+<%@page import="model.dto.BoardDTO" %>
+<%@page import="java.util.List" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+         pageEncoding="UTF-8" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <c:set var="contextPath" value="${pageContext.request.contextPath}"/>
+<!DOCTYPE html>
 <html>
 <head>
-    <title>Title</title>
+    <meta charset="UTF-8">
+    <title>Insert title here</title>
 </head>
-
-<%
-    List<BoardDTO> boards = BoardDAO.getInstance().getBoards();
-    pageContext.setAttribute("boards", boards);
-%>
-
 <body>
+
 <h1>Board 목록 보기</h1>
+
 <a href="${contextPath}/board/registForm.jsp">게시글등록하러가기</a>
+
+<c:set var="boards" value="${BoardDAO.getInstance().getBoards()}"/>
+
 <table border="1">
     <thead>
     <tr>
@@ -40,7 +35,7 @@
         </tr>
     </c:if>
     <c:if test="${not empty boards}">
-        <c:forEach items="${boards}" var="board">
+        <c:forEach var="board" items="${boards}">
             <tr>
                 <td>${board.bid}</td>
                 <td>${board.user.uid}</td>
@@ -49,8 +44,8 @@
             </tr>
         </c:forEach>
     </c:if>
-
     </tbody>
 </table>
+
 </body>
 </html>
