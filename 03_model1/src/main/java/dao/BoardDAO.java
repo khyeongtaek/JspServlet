@@ -46,22 +46,30 @@ public class BoardDAO {
         List<BoardDTO> boards = new ArrayList<BoardDTO>();
         try {
             con = DBUtils.getConnection();
-            sql = "SELECT bid, uid, title, content, created_at, modified_at FROM tbl_board ORDER BY created_at DESC";
+            StringBuilder sb = new StringBuilder();
+            sb.append("SELECT b.bid, u.uid, u.nickname, b.title, b.content, b.created_at, b.modified_at")
+                    .append(" FROM tbl_board b JOIN tbl_user u")
+                    .append(" ON b.uid = u.uid")
+                    .append(" ORDER BY b.bid DESC")
+                    .append(" LIMIT 0, 10");
+            sql = sb.toString();
             ps = con.prepareStatement(sql);
             rs = ps.executeQuery();
             while (rs.next()) {
                 //----- DB에서 가져온 결과 ResultSet
                 int bid = rs.getInt(1);
                 int uid = rs.getInt(2);
-                String title = rs.getString(3);
-                String content = rs.getString(4);
-                Timestamp createdAt = rs.getTimestamp(5);
-                Timestamp modifiedAt = rs.getTimestamp(6);
+                String nickname = rs.getString(3);
+                String title = rs.getString(4);
+                String content = rs.getString(5);
+                Timestamp createdAt = rs.getTimestamp(6);
+                Timestamp modifiedAt = rs.getTimestamp(7);
                 //----- 결과 ResultSet를 BoardDTO로 변환
                 BoardDTO board = new BoardDTO();
                 board.setBid(bid);
                 UserDTO user = new UserDTO();
                 user.setUid(uid);
+                user.setNickname(nickname);
                 board.setUser(user);
                 board.setTitle(title);
                 board.setContent(content);
@@ -83,7 +91,12 @@ public class BoardDAO {
         BoardDTO board = null;
         try {
             con = DBUtils.getConnection();
-            sql = "SELECT bid, uid, title, content, created_at, modified_at FROM tbl_board WHERE bid = ?";
+            StringBuilder sb = new StringBuilder();
+            sb.append("SELECT b.bid, u.uid, u.nickname, b.title, b.content, b.created_at, b.modified_at")
+                    .append(" FROM tbl_board b JOIN tbl_user u")
+                    .append(" ON b.uid = u.uid")
+                    .append(" WHERE bid = ?");
+            sql = sb.toString();
             ps = con.prepareStatement(sql);
             ps.setInt(1, bid);  // 쿼리문의 1번째 Placeholder(?)에 bid 전달하기
             rs = ps.executeQuery();
@@ -93,11 +106,12 @@ public class BoardDAO {
                 board.setBid(rs.getInt(1));
                 UserDTO user = new UserDTO();
                 user.setUid(rs.getInt(2));
+                user.setNickname(rs.getString(3));
                 board.setUser(user);
-                board.setTitle(rs.getString(3));
-                board.setContent(rs.getString(4));
-                board.setCreatedAt(rs.getTimestamp(5));
-                board.setModifiedAt(rs.getTimestamp(6));
+                board.setTitle(rs.getString(4));
+                board.setContent(rs.getString(5));
+                board.setCreatedAt(rs.getTimestamp(6));
+                board.setModifiedAt(rs.getTimestamp(7));
             }
         } catch (Exception e) {
             e.printStackTrace();

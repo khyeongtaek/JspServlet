@@ -17,8 +17,8 @@ public class DBUtils {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
             con = DriverManager.getConnection(
-                    "jdbc:mysql://localhost:3306/db_jdbc?characterEncoding=UTF-8&serverTimezone=UTC",
-                    "goodee", "goodee");
+                    "jdbc:mysql://kwonht.synology.me:33307/db_jdbc?characterEncoding=UTF-8&serverTimezone=UTC",
+                    "user", "root");
         } catch (Exception e) {
             e.printStackTrace();
         }
