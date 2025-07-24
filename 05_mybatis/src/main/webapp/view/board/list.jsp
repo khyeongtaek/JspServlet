@@ -96,7 +96,7 @@
 <h1>게시글 목록</h1>
 
 <div style="text-align: center;">
-    <a href="${contextPath}/board/registForm.do" class="register-btn">게시글 등록하기</a>
+    <a href="${contextPath}/board/registForm" class="register-btn">게시글 등록하기</a>
 </div>
 
 <div class="board-container">
@@ -105,7 +105,7 @@
     </c:if>
     <c:if test="${not empty boards}">
         <c:forEach var="board" items="${boards}">
-            <div class="board-item" onclick="location.href='${contextPath}/board/detail.do?bid=${board.bid}'">
+            <div class="board-item" onclick="location.href='${contextPath}/board/detail?bid=${board.bid}'">
                 <div class="board-title">${board.title}</div>
                 <div class="board-info">
                     작성자: ${board.user.nickname}

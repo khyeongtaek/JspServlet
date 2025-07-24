@@ -9,43 +9,40 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.*;
 import java.io.IOException;
 
-@WebServlet("*.do")
+@WebServlet("/board/*")
 public class BoardController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         BoardService boardService = new BoardServiceImpl();
         ActionForward af = null;
-        String servletPath = request.getServletPath();
 
-        request.setCharacterEncoding("UTF-8");
-        response.setHeader("Content-type", "text/html; charset=UTF-8");
+        String requestURI = request.getRequestURI();
+        String contextPath = request.getContextPath();
+        String path = requestURI.substring(contextPath.length());
 
 
-        switch (servletPath) {
-            case "/main.do":
-                af = new ActionForward("/main.jsp", false);
-                break;
-            case "/board/list.do":
+        switch (path.substring("/board/".length())) {
+            case "list":
                 af = boardService.getBoards(request);
                 break;
-            case "/board/detail.do":
-            case "/board/modifyForm.do":
+            case "detail":
+            case "modifyForm":
                 af = boardService.getBoardById(request);
                 break;
-            case "/board/registForm.do":
-                af = new ActionForward("/board/regist.jsp", false);
+            case "registForm":
+                af = new ActionForward("/view/board/regist.jsp", false);
                 break;
-            case "/board/regist.do":
+            case "regist":
                 af = boardService.registBoard(request);
                 break;
-            case "/board/remove.do":
+            case "remove":
                 af = boardService.removeBoard(request);
                 break;
-            case "/board/modify.do":
+            case "modify":
                 af = boardService.modifyBoard(request);
                 break;
             default:
-                af = new ActionForward(request.getContextPath() + "/main.do", true);
+                af = new ActionForward(request.getContextPath() + "/main", true);
         }
 
         if (af.isRedirect()) {

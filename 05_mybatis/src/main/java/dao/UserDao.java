@@ -1,16 +1,17 @@
 package dao;
 
-import model.dto.BoardDTO;
+import model.dto.UserDTO;
 import org.apache.ibatis.io.Resources;
+import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 
 import java.io.IOException;
 import java.io.InputStream;
 
-public class BoardDao {
+public class UserDao {
     private SqlSessionFactory factory;
-    private BoardDao() {
+    private UserDao() {
         try {
             InputStream in = Resources.getResourceAsStream("mybatis/mybatis-config.xml");
             factory = new SqlSessionFactoryBuilder().build(in);
@@ -21,29 +22,15 @@ public class BoardDao {
 
 
     }
-    private static final BoardDao dao = new BoardDao();
-    public static BoardDao getInstance() {
+    private static final UserDao dao = new UserDao();
+    public static UserDao getInstance() {
         return dao;
     }
 
-    public int deleteBoard(int bid) {
-        return 0;
-    }
-
-    public int insertBoard(BoardDTO board) {
-        return 0;
-    }
-
-    public int updateBoard(BoardDTO board) {
-        return 0;
-    }
-
-    public Object getBoards() {
-        return null;
-    }
-
-    public Object getBoardById(int bid) {
-                return null;
-
+    public UserDTO getUser(UserDTO dto) {
+        SqlSession ss = factory.openSession();
+        UserDTO userDto = ss.selectOne("mybatis.userMapper.getUser", dto);
+        ss.close();
+        return userDto;
     }
 }

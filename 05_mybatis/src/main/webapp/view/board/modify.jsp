@@ -6,7 +6,7 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>새 게시글 작성</title>
+    <title>게시글 수정</title>
     <style>
         * {
             box-sizing: border-box;
@@ -39,7 +39,7 @@
         }
 
         .form-group {
-            margin-bottom: 25px;
+            margin-bottom: 20px;
         }
 
         label {
@@ -50,32 +50,31 @@
         }
 
         input[type="text"],
-        select,
         textarea {
             width: 100%;
             padding: 12px;
             border: 2px solid #ddd;
             border-radius: 5px;
             font-size: 1em;
-            transition: all 0.3s ease;
-        }
-
-        select {
-            cursor: pointer;
-            background-color: white;
+            transition: border-color 0.3s ease;
         }
 
         input[type="text"]:focus,
-        select:focus,
         textarea:focus {
             border-color: #007bff;
             outline: none;
-            box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.1);
         }
 
         textarea {
             min-height: 300px;
             resize: vertical;
+        }
+
+        .author-info {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 20px;
         }
 
         .button-group {
@@ -91,18 +90,18 @@
             cursor: pointer;
             font-size: 1em;
             transition: all 0.3s ease;
-            text-align: center;
-            flex: 1;
         }
 
         .btn-primary {
             background-color: #007bff;
             color: white;
+            flex: 1;
         }
 
         .btn-cancel {
             background-color: #6c757d;
             color: white;
+            flex: 1;
         }
 
         .btn:hover {
@@ -127,32 +126,24 @@
 </head>
 <body>
 <div class="container">
-    <h1>새 게시글 작성</h1>
+    <h1>게시글 수정</h1>
 
-    <form action="${contextPath}/board/regist.do" method="post">
-        <div class="form-group">
-            <label for="uid">작성자</label>
-            <select id="uid" name="uid" required>
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-            </select>
-        </div>
+    <form action="${contextPath}/board/modify" method="post">
+        <input type="hidden" name="bid" value="${board.bid}">
 
         <div class="form-group">
             <label for="title">제목</label>
-            <input type="text" id="title" name="title" required>
+            <input type="text" id="title" name="title" value="${board.title}" required>
         </div>
 
         <div class="form-group">
             <label for="content">내용</label>
-            <textarea id="content" name="content" required></textarea>
+            <textarea id="content" name="content" required>${board.content}</textarea>
         </div>
 
         <div class="button-group">
-            <button type="button" class="btn btn-cancel" onclick="location.href='${contextPath}/board/list.do'">취소
-            </button>
-            <button type="submit" class="btn btn-primary">등록하기</button>
+            <button type="button" class="btn btn-cancel" onclick="history.back()">취소</button>
+            <button type="submit" class="btn btn-primary">수정완료</button>
         </div>
     </form>
 </div>

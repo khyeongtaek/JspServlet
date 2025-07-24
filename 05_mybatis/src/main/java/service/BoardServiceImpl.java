@@ -2,7 +2,6 @@ package service;
 
 import controller.servlet.ActionForward;
 import dao.BoardDao;
-import dao.BoardDaoImpl;
 import model.dto.BoardDTO;
 import model.dto.UserDTO;
 
@@ -10,22 +9,22 @@ import javax.servlet.http.HttpServletRequest;
 
 public class BoardServiceImpl implements BoardService {
 
-    BoardDao dao = BoardDaoImpl.getInstance();
+    BoardDao dao = BoardDao.getInstance();
 
     @Override
     public ActionForward getBoards(HttpServletRequest request) {
         request.setAttribute("boards", dao.getBoards());
-        return new ActionForward("/board/list.jsp", false);
+        return new ActionForward("/view/board/list.jsp", false);
     }
 
     @Override
     public ActionForward getBoardById(HttpServletRequest request) {
         String code = request.getParameter("code");
-        ActionForward af = new ActionForward("/board/detail.jsp", false);
+        ActionForward af = new ActionForward("/view/board/detail.jsp", false);
 
         try {
             if ("modify".equals(code)) {
-                af.setView("/board/modify.jsp");
+                af.setView("/view/board/modify.jsp");
             }
             request.setAttribute("board",
                     dao.getBoardById(
@@ -42,7 +41,7 @@ public class BoardServiceImpl implements BoardService {
             dto.setTitle("잘못된 접근!!!!!!!!!!!!!!!");
             dto.setBid(0);
             request.setAttribute("board", dto);
-            af = new ActionForward("/board/detail.jsp", false);
+            af = new ActionForward("/view/board/detail.jsp", false);
         }
         return af;
     }
@@ -62,16 +61,16 @@ public class BoardServiceImpl implements BoardService {
 
         String view = null;
         if (cnt == 1) {
-            view = "/board/list.do";
+            view = "/board/list";
         } else {
-            view = "/board/registForm.do";
+            view = "/board/registForm";
         }
         return new ActionForward(request.getContextPath() + view, true);
     }
 
     @Override
     public ActionForward removeBoard(HttpServletRequest request) {
-        ActionForward af = new ActionForward("/board/list.jsp", false);
+        ActionForward af = new ActionForward("/view/board/list.jsp", false);
         int bid = 0;
 
         try {
@@ -85,16 +84,16 @@ public class BoardServiceImpl implements BoardService {
             dto.setTitle("잘못된 접근!!!!!!!!!!!!!!!");
             dto.setBid(0);
             request.setAttribute("board", dto);
-            af.setView("/board/detail.jsp");
+            af.setView("/view/board/detail.jsp");
         }
 
         int cnt = dao.deleteBoard(bid);
 
         String view = null;
         if (cnt == 1) {
-            view = "/board/list.do";
+            view = "/board/list";
         } else {
-            view = "/main.do";
+            view = "/main";
         }
         return new ActionForward(request.getContextPath() + view, true);
     }
@@ -114,9 +113,9 @@ public class BoardServiceImpl implements BoardService {
 
         String view = null;
         if (cnt == 1) {
-            view = "/board/detail.do?bid=" + bid + "&code=detail";
+            view = "/board/detail?bid=" + bid + "&code=detail";
         } else {
-            view = "/board/modifyForm.do?bid=" + bid + "&code=modify";
+            view = "/board/modifyForm?bid=" + bid + "&code=modify";
         }
         return new ActionForward(request.getContextPath() + view, true);
     }

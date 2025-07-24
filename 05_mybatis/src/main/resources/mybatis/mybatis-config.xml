@@ -6,9 +6,10 @@
 
     <properties resource="mybatis/mybatis.properties"/>
 
-<!--    <settings>-->
-<!--        <setting name="mapUnderscoreToCamelCase" value="true"/>-->
-<!--    </settings>-->
+    <typeAliases>
+        <typeAlias type="model.dto.BoardDTO" alias="BoardDTO"/>
+        <typeAlias type="model.dto.UserDTO" alias="UserDTO"/>
+    </typeAliases>
 
     <environments default="development">
         <environment id="development">

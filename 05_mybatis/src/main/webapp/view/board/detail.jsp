@@ -143,10 +143,10 @@
         </div>
 
         <div class="button-group">
-            <a href="${contextPath}/board/list.do" class="btn btn-back">목록으로</a>
-            <a href="${contextPath}/board/modifyForm.do?bid=${board.bid}&code=modify" class="btn btn-modify">수정하기</a>
+            <a href="${contextPath}/board/list" class="btn btn-back">목록으로</a>
+            <a href="${contextPath}/board/modifyForm?bid=${board.bid}&code=modify" class="btn btn-modify">수정하기</a>
             <a href="javascript:void(0);"
-               onclick="if(confirm('정말 삭제하시겠습니까?')) { location.href='${contextPath}/board/remove.do?bid=${board.bid}'; }"
+               onclick="if(confirm('정말 삭제하시겠습니까?')) { location.href='${contextPath}/board/remove?bid=${board.bid}'; }"
                class="btn btn-delete">삭제하기</a>
         </div>
     </div>
