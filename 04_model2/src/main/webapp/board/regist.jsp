@@ -28,7 +28,7 @@
             background: white;
             padding: 30px;
             border-radius: 10px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
         }
 
         h1 {
@@ -70,7 +70,7 @@
         textarea:focus {
             border-color: #007bff;
             outline: none;
-            box-shadow: 0 0 0 3px rgba(0,123,255,0.1);
+            box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.1);
         }
 
         textarea {
@@ -150,7 +150,8 @@
         </div>
 
         <div class="button-group">
-            <button type="button" class="btn btn-cancel" onclick="location.href='${contextPath}/board/list.do'">취소</button>
+            <button type="button" class="btn btn-cancel" onclick="location.href='${contextPath}/board/list.do'">취소
+            </button>
             <button type="submit" class="btn btn-primary">등록하기</button>
         </div>
     </form>

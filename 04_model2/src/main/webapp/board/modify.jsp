@@ -28,7 +28,7 @@
             background: white;
             padding: 30px;
             border-radius: 10px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
         }
 
         h1 {
@@ -113,11 +113,11 @@
             .container {
                 padding: 20px;
             }
-            
+
             .button-group {
                 flex-direction: column;
             }
-            
+
             .btn {
                 width: 100%;
             }
@@ -125,33 +125,27 @@
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1>게시글 수정</h1>
-        
-        <form action="${contextPath}/board/modify.do" method="post">
-            <input type="hidden" name="bid" value="${board.bid}">
-            <input type="hidden" name="uid" value="${board.user.uid}">
-            
-            <div class="author-info">
-                <label>작성자</label>
-                <div>${board.user.nickname}</div>
-            </div>
-            
-            <div class="form-group">
-                <label for="title">제목</label>
-                <input type="text" id="title" name="title" value="${board.title}" required>
-            </div>
-            
-            <div class="form-group">
-                <label for="content">내용</label>
-                <textarea id="content" name="content" required>${board.content}</textarea>
-            </div>
-            
-            <div class="button-group">
-                <button type="button" class="btn btn-cancel" onclick="history.back()">취소</button>
-                <button type="submit" class="btn btn-primary">수정완료</button>
-            </div>
-        </form>
-    </div>
+<div class="container">
+    <h1>게시글 수정</h1>
+
+    <form action="${contextPath}/board/modify.do" method="post">
+        <input type="hidden" name="bid" value="${board.bid}">
+
+        <div class="form-group">
+            <label for="title">제목</label>
+            <input type="text" id="title" name="title" value="${board.title}" required>
+        </div>
+
+        <div class="form-group">
+            <label for="content">내용</label>
+            <textarea id="content" name="content" required>${board.content}</textarea>
+        </div>
+
+        <div class="button-group">
+            <button type="button" class="btn btn-cancel" onclick="history.back()">취소</button>
+            <button type="submit" class="btn btn-primary">수정완료</button>
+        </div>
+    </form>
+</div>
 </body>
 </html>

@@ -30,7 +30,7 @@
         .board-detail {
             background: white;
             border-radius: 10px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
             padding: 30px;
         }
 
@@ -103,20 +103,20 @@
             .container {
                 margin: 20px auto;
             }
-            
+
             .board-title {
                 font-size: 1.5em;
             }
-            
+
             .board-info {
                 flex-direction: column;
                 gap: 5px;
             }
-            
+
             .button-group {
                 flex-direction: column;
             }
-            
+
             .btn {
                 width: 100%;
                 text-align: center;
@@ -125,29 +125,31 @@
     </style>
 </head>
 <body>
-    <div class="container">
-        <div class="board-detail">
-            <div class="board-header">
-                <h1 class="board-title">${board.title}</h1>
-                <div class="board-info">
-                    <span>작성자: ${board.user.nickname}</span>
-                    <span>작성일: ${board.createdAt}</span>
-                    <c:if test="${board.modifiedAt != null}">
-                        <span>수정일: ${board.modifiedAt}</span>
-                    </c:if>
-                </div>
-            </div>
-
-            <div class="board-content">
-${board.content}
-            </div>
-
-            <div class="button-group">
-                <a href="${contextPath}/board/list.do" class="btn btn-back">목록으로</a>
-                <a href="${contextPath}/board/modifyForm.do?bid=${board.bid}" class="btn btn-modify">수정하기</a>
-                <a href="javascript:void(0);" onclick="if(confirm('정말 삭제하시겠습니까?')) { location.href='${contextPath}/board/remove.do?bid=${board.bid}'; }" class="btn btn-delete">삭제하기</a>
+<div class="container">
+    <div class="board-detail">
+        <div class="board-header">
+            <h1 class="board-title">${board.title}</h1>
+            <div class="board-info">
+                <span>작성자: ${board.user.nickname}</span>
+                <span>작성일: ${board.createdAt}</span>
+                <c:if test="${board.modifiedAt != null}">
+                    <span>수정일: ${board.modifiedAt}</span>
+                </c:if>
             </div>
         </div>
+
+        <div class="board-content">
+            ${board.content}
+        </div>
+
+        <div class="button-group">
+            <a href="${contextPath}/board/list.do" class="btn btn-back">목록으로</a>
+            <a href="${contextPath}/board/modifyForm.do?bid=${board.bid}&code=modify" class="btn btn-modify">수정하기</a>
+            <a href="javascript:void(0);"
+               onclick="if(confirm('정말 삭제하시겠습니까?')) { location.href='${contextPath}/board/remove.do?bid=${board.bid}'; }"
+               class="btn btn-delete">삭제하기</a>
+        </div>
     </div>
+</div>
 </body>
 </html>

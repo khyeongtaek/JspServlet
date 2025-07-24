@@ -72,7 +72,7 @@ public class BoardServiceImpl implements BoardService {
     @Override
     public ActionForward removeBoard(HttpServletRequest request) {
         ActionForward af = new ActionForward("/board/list.jsp", false);
-        int bid=0;
+        int bid = 0;
 
         try {
             bid = Integer.parseInt(request.getParameter("bid"));
@@ -101,6 +101,23 @@ public class BoardServiceImpl implements BoardService {
 
     @Override
     public ActionForward modifyBoard(HttpServletRequest request) {
-        return null;
+        int bid = Integer.parseInt(request.getParameter("bid"));
+        String title = request.getParameter("title");
+        String content = request.getParameter("content");
+
+        BoardDTO board = new BoardDTO();
+        board.setBid(bid);
+        board.setTitle(title);
+        board.setContent(content);
+
+        int cnt = dao.updateBoard(board);
+
+        String view = null;
+        if (cnt == 1) {
+            view = "/board/detail.do?bid=" + bid + "&code=detail";
+        } else {
+            view = "/board/modifyForm.do?bid=" + bid + "&code=modify";
+        }
+        return new ActionForward(request.getContextPath() + view, true);
     }
 }

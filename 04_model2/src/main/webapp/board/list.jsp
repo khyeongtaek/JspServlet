@@ -108,7 +108,7 @@
             <div class="board-item" onclick="location.href='${contextPath}/board/detail.do?bid=${board.bid}'">
                 <div class="board-title">${board.title}</div>
                 <div class="board-info">
-                    작성자: ${board.user.uid}
+                    작성자: ${board.user.nickname}
                     <br>
                     글번호: ${board.bid}
                 </div>

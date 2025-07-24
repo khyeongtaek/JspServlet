@@ -29,6 +29,7 @@ public class BoardController extends HttpServlet {
                 af = boardService.getBoards(request);
                 break;
             case "/board/detail.do":
+            case "/board/modifyForm.do":
                 af = boardService.getBoardById(request);
                 break;
             case "/board/registForm.do":
@@ -40,17 +41,14 @@ public class BoardController extends HttpServlet {
             case "/board/remove.do":
                 af = boardService.removeBoard(request);
                 break;
-            case "/board/modifyForm.do":
-                af = new ActionForward("/board/modify.jsp", false);
-                break;
             case "/board/modify.do":
-                af = new ActionForward("/board/detail.jsp", true);
+                af = boardService.modifyBoard(request);
                 break;
             default:
-                af = new ActionForward(request.getContextPath()+"/main.jsp", true);
+                af = new ActionForward(request.getContextPath() + "/main.do", true);
         }
 
-        if(af.isRedirect()) {
+        if (af.isRedirect()) {
             response.sendRedirect(af.getView());
         } else {
             request.getRequestDispatcher(af.getView()).forward(request, response);
