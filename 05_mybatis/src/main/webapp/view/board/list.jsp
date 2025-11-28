@@ -1,122 +1,91 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-         pageEncoding="UTF-8" %>
+    pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<c:set var="contextPath" value="${pageContext.request.contextPath}"/>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<c:set var="contextPath" value="${pageContext.request.contextPath}" />
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="UTF-8">
-    <title>게시글 목록</title>
-    <style>
-        .board-container {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 20px;
-            padding: 20px;
-            justify-content: center;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-        
-        .board-item {
-            width: calc(20% - 16px); /* 한 줄에 5개를 위한 너비 설정 */
-            height: 150px;
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            padding: 15px;
-            background-color: #fff;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-            transition: all 0.3s ease;
-            cursor: pointer;
-            flex-shrink: 0; /* 크기 고정 */
-            box-sizing: border-box;
-        }
-        
-        .board-item:hover {
-            transform: scale(1.05);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-        }
-        
-        .board-title {
-            font-size: 1.1em;
-            font-weight: bold;
-            margin-bottom: 10px;
-            color: #333;
-            /* 긴 제목 처리 */
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
-        
-        .board-info {
-            font-size: 0.9em;
-            color: #666;
-        }
-        
-        .board-date {
-            margin-top: 10px;
-            font-size: 0.8em;
-            color: #999;
-        }
-        
-        .register-btn {
-            display: inline-block;
-            margin: 20px;
-            padding: 10px 20px;
-            background-color: #007bff;
-            color: white;
-            text-decoration: none;
-            border-radius: 5px;
-            transition: background-color 0.3s ease;
-        }
-        
-        .register-btn:hover {
-            background-color: #0056b3;
-        }
-        
-        h1 {
-            text-align: center;
-            color: #333;
-            margin-bottom: 20px;
-        }
-
-        /* 반응형 처리 제거 - 항상 5개씩 유지 */
-        @media (max-width: 1200px) {
-            .board-container {
-                padding: 10px;
-            }
-            .board-item {
-                font-size: 14px;
-            }
-        }
-    </style>
+<meta charset="UTF-8">
+<title>Insert title here</title>
 </head>
 <body>
 
-<h1>게시글 목록</h1>
-
-<div style="text-align: center;">
-    <a href="${contextPath}/board/registForm" class="register-btn">게시글 등록하기</a>
-</div>
-
-<div class="board-container">
-    <c:if test="${empty boards}">
-        <div>첫 게시글의 주인공이 되어 보세요.</div>
-    </c:if>
-    <c:if test="${not empty boards}">
-        <c:forEach var="board" items="${boards}">
-            <div class="board-item" onclick="location.href='${contextPath}/board/detail?bid=${board.bid}'">
-                <div class="board-title">${board.title}</div>
-                <div class="board-info">
-                    작성자: ${board.user.nickname}
-                    <br>
-                    글번호: ${board.bid}
-                </div>
-                <div class="board-date">${board.createdAt}</div>
-            </div>
-        </c:forEach>
-    </c:if>
-</div>
+  <div class="list-wrap">
+    
+    <h1>게시글 목록 화면</h1>
+    
+    <div>
+      <div>통합 검색1</div>
+      <form action="${contextPath}/board/find1">
+        <select name="target">
+          <option value="title">제목</option>
+          <option value="content">내용</option>
+          <option value="created_at">작성일자</option>
+        </select>
+        <input type="text" name="query" placeholder="검색어">
+        <br>
+        <input type="date" name="beginDate">-<input type="date" name="endDate"><br>
+        <button type="submit">검색</button>
+      </form>
+    </div>
+    
+    <br>
+    
+    <div>
+      <div>통합 검색2</div>
+      <form action="${contextPath}/board/find2">
+        <input type="text" name="title" placeholder="제목 검색"><br>
+        <input type="text" name="content" placeholder="내용 검색"><br>
+        <input type="date" name="beginDate">-<input type="date" name="endDate"><br>
+        <button type="submit">검색</button>
+      </form>
+    </div>
+    
+    <br>
+    
+    <div><a href="${contextPath}/board/list?sort=DESC">최신순</a> | <a href="${contextPath}/board/list?sort=ASC">과거순</a></div>
+    
+    <br>
+    
+    <form action="${contextPath}/board/removeBoards" 
+          method="post">
+      <div class="btn-wrap"><button type="submit">선택삭제</button></div>
+      <table border="1">
+        <thead>
+          <tr>
+            <td><input type="checkbox"></td>
+            <td>제목</td>
+            <td>작성자</td>
+            <td>작성일자</td>
+          </tr>
+        </thead>
+        <tbody>
+          <c:forEach var="b" items="${boards}">
+            <tr>
+              <td><input type="checkbox" name="numbers" value="${b.bid}"></td>
+              <td><a href="${contextPath}/board/detail?bid=${b.bid}&code=detail">${b.title}</a></td>
+              <td>${b.user.nickname}</td>
+              <td><fmt:formatDate value="${b.createdAt}" pattern="yyyy-MM-dd"/></td>
+            </tr>
+          </c:forEach>
+        </tbody>
+        <tfoot>
+          <tr>
+            <td colspan="4">전체 ${boardCount}개 게시글이 있습니다.</td>
+          </tr>
+        </tfoot>
+      </table>
+      
+      <br>
+      
+      <c:if test="${not empty sessionScope.loginUser}">      
+        <div><a href="${contextPath}/board/registForm">새 게시글 작성하기</a></div>
+      </c:if>
+    
+    </form>
+    
+  </div>
 
 </body>
 </html>

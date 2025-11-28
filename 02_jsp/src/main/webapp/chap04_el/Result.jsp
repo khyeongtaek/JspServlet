@@ -1,19 +1,18 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: kht
-  Date: 2025. 7. 22.
-  Time: 오전 10:40
-  To change this template use File | Settings | File Templates.
---%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<!DOCTYPE html>
 <html>
 <head>
-    <title>Title</title>
+<meta charset="UTF-8">
+<title>Insert title here</title>
 </head>
 <body>
-<div>height : ${height}</div>
-<div>weight : ${param.weight}</div>
 
+<div>height : ${height}</div>
+<div>height > 180 : ${height > 180}</div>
+
+<div>weight : ${param.weight}</div>
+<div>weight > 100 : ${param.weight - 100 > 0}</div>
 
 </body>
 </html>

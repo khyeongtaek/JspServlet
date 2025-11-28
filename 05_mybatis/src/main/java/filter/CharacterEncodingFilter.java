@@ -1,33 +1,44 @@
 package filter;
 
-import javax.servlet.*;
-import javax.servlet.annotation.*;
 import java.io.IOException;
+import javax.servlet.Filter;
+import javax.servlet.FilterChain;
+import javax.servlet.FilterConfig;
+import javax.servlet.ServletException;
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
+import javax.servlet.annotation.WebFilter;
+import javax.servlet.http.HttpFilter;
 
-@WebFilter("/*")
-@WebInitParam(name="encoding", value="UTF-8")
-public class CharacterEncodingFilter implements Filter {
-    private String encoding;
+/*
+ * @WebFilter 애너테이션은 web.xml의 <filter-mapping> 태그로 대신할 수 있습니다.
+ * @WebFilter 애너테이션과 web.xml의 <filter-mapping> 태그가 둘 다 존재하는 경우에는 
+ * web.xml의 <fliter-mapping> 태그가 우선적으로 고려되지만, 실행 순서가 보장되어 있지 않습니다.
+ */
 
-    @Override
-    public void init(FilterConfig config) throws ServletException {
-        encoding = config.getInitParameter("encoding");
-        System.out.println(" ========= CharacterEncodingFilter: " + encoding);
-        if (encoding == null) {
-            encoding = "UTF-8";
-        }
-    }
+// @WebFilter("/*")
 
-    @Override
-    public void destroy() {
-    }
+public class CharacterEncodingFilter extends HttpFilter implements Filter {
+  
+  private String encoding;
+  
+  @Override
+	public void destroy() { }
 
-    @Override
-    public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws ServletException, IOException {
+  @Override
+	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
+		request.setCharacterEncoding(encoding);
+		response.setContentType("text/html; charset=" + encoding);
+		chain.doFilter(request, response);
+	}
 
-        request.setCharacterEncoding(encoding);
-        response.setContentType("text/html; charset="+encoding);
+  @Override
+	public void init(FilterConfig fConfig) throws ServletException {
+    //----- web.xml의 <filter>태그를 이용해서 encoding값을 전달할 수 있습니다.
+		encoding = fConfig.getInitParameter("encoding");
+		System.out.println("===== CharacterEncodingFilter : " + encoding);
+		if (encoding == null)
+		  encoding = "UTF-8";
+	}
 
-        chain.doFilter(request, response);
-    }
 }

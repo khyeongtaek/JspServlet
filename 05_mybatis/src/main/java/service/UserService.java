@@ -1,11 +1,10 @@
 package service;
 
-import controller.servlet.ActionForward;
-
 import javax.servlet.http.HttpServletRequest;
 
-public interface UserService {
-    ActionForward login(HttpServletRequest request);
-    ActionForward logout(HttpServletRequest request);
+import common.ActionForward;
 
+public interface UserService {
+  ActionForward login(HttpServletRequest request);
+  ActionForward logout(HttpServletRequest request);
 }
